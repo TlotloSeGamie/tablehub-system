@@ -13,7 +13,6 @@ const restaurants = [
 const HomeScreen = ({ navigation }) => {
     return (
       <View style={styles.container}>
-        {/* <Navbar /> */}
         <Text style={styles.recommendedTitle}> Recommended Places </Text>
   
         <FlatList
@@ -54,7 +53,7 @@ const HomeScreen = ({ navigation }) => {
     container: {    
       flex: 1,
     //   padding: 100,
-      top: 15,
+      top: 1,
       paddingHorizontal: 16,
       backgroundColor: '#ffffff',
     },

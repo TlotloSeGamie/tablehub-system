@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, StyleSheet, Text, Modal } from "react-native";
 import { useNavigation } from "@react-navigation/native"; 
-import { FontAwesome, Entypo, Ionicons } from "@expo/vector-icons"; // ✅ Removed FontAwesome5 (no longer needed)
+import { FontAwesome, Entypo, Ionicons } from "@expo/vector-icons"; 
 
 const Footer = () => {
   const navigation = useNavigation(); 
-  const [activeTab, setActiveTab] = useState("Home"); // ✅ Set default active tab as "Home"
+  const [activeTab, setActiveTab] = useState("Home");
   const [showLoginModal, setShowLoginModal] = useState(false); 
 
   const menuItems = [
@@ -16,7 +16,7 @@ const Footer = () => {
   ];
 
   const handlePress = (item) => {
-    setActiveTab(item.route); // Set active tab on click
+    setActiveTab(item.route); 
     if (item.label === "Login") {
       setShowLoginModal(true); 
     } else {
@@ -70,12 +70,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
-    transition: "all 0.3s ease-in-out", // Smooth transition effect when tapping
+    transition: "all 0.3s ease-in-out", 
   },
   activeMenuItem: {
     borderBottomWidth: 3,
-    borderBottomColor: "#007BFF", // Blue accent for active tab
-    transform: [{ scale: 1.1 }], // Slightly enlarge active tab for a modern look
+    borderBottomColor: "#007BFF", 
+    transform: [{ scale: 1.1 }], 
   },
   menuText: {
     marginTop: 5,
@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
   },
   activeMenuText: {
     color: "#007BFF",
-    fontWeight: "bold", // Make text bold for active tab
-    fontSize: 14, // Increase font size for active tab
+    fontWeight: "bold",
+    fontSize: 14, 
   },
   modalContainer: {
     flex: 1,

@@ -15,8 +15,7 @@ const Navbar = () => {
   const navigation = useNavigation();
   const [isMobile, setIsMobile] = useState(false);
   const [mobileNav, setMobileNav] = useState(false);
-  const [showMenu, setShowMenu] = useState(false); // State to control menu visibility
-
+  const [showMenu, setShowMenu] = useState(false); 
   const checkWindowWidth = () => {
     const windowWidth = Dimensions.get("window").width;
     if (windowWidth <= 768) {
@@ -49,24 +48,22 @@ const Navbar = () => {
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.menuIcon}
-          onPress={() => setShowMenu(!showMenu)} // Toggle menu visibility
+          onPress={() => setShowMenu(!showMenu)} 
         >
-          <Icon name="bars" size={24} color="#FFFFFF" /> {/* Menu icon */}
+          <Icon name="bars" size={24} color="#FFFFFF" /> 
         </TouchableOpacity>
       </View>
 
-      {/* Menu Modal or Overlay */}
       <Modal
         transparent={true}
         animationType="slide"
         visible={showMenu}
-        onRequestClose={() => setShowMenu(false)} // Close menu on backdrop press
+        onRequestClose={() => setShowMenu(false)}
       >
         <View style={styles.overlay}>
-          {/* Close Button */}
           <TouchableOpacity
             style={styles.closeButton}
-            onPress={() => setShowMenu(false)} // Close menu
+            onPress={() => setShowMenu(false)} 
           >
             <Icon name="close" size={24} color="#FFFFFF" />
           </TouchableOpacity>
@@ -81,7 +78,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(146, 204, 255)", 
     position: "relative",
     width: "100%",
-    top: 10,
+    top: 0,
     left: 0,
     zIndex: 20,
   },

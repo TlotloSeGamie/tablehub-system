@@ -1,15 +1,34 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Importing Ionicons for the back button and icons
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { Picker } from "@react-native-picker/picker";
 
 const BookingScreen = ({ route, navigation }) => {
-  const { restaurant } = route.params; // Get the restaurant details from navigation params
+  const { restaurant } = route.params;
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
+  const [selectedSlot, setSelectedSlot] = useState(restaurant.slots[0]);
+
+  const onChange = (event, selectedDate) => {
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
+    setShow(Platform.OS === "ios");
+  };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => navigation.goBack()} // Navigate to the previous screen
+        onPress={() => navigation.goBack()}
       >
         <Ionicons name="arrow-back" size={24} color="#ffffff" />
       </TouchableOpacity>
@@ -17,29 +36,57 @@ const BookingScreen = ({ route, navigation }) => {
       <Image source={restaurant.image} style={styles.image} />
       <View style={styles.detailsContainer}>
         <Text style={styles.name}>{restaurant.name}</Text>
-        
-        {/* Location with Icon */}
+
         <View style={styles.infoRow}>
           <Ionicons name="location-outline" size={20} color="#007BFF" />
           <Text style={styles.location}>Location: {restaurant.location}</Text>
         </View>
 
-        {/* Cuisine with Icon */}
         <View style={styles.infoRow}>
           <Ionicons name="restaurant-outline" size={20} color="#007BFF" />
           <Text style={styles.cuisine}>Cuisine: {restaurant.cuisine}</Text>
         </View>
 
-        {/* Available Slots with Icon */}
         <View style={styles.infoRow}>
           <Ionicons name="time-outline" size={20} color="#007BFF" />
-          <Text style={styles.slots}>Available Slots: {restaurant.slots.join(', ')}</Text>
+          <Text style={styles.slots}>Select Available Slot:</Text>
         </View>
+
+        <Picker
+          selectedValue={selectedSlot}
+          onValueChange={(itemValue) => setSelectedSlot(itemValue)}
+          style={styles.picker}
+        >
+          {restaurant.slots.map((slot, index) => (
+            <Picker.Item key={index} label={slot} value={slot} />
+          ))}
+        </Picker>
+
+        <TouchableOpacity
+          style={styles.datePickerButton}
+          onPress={() => setShow(true)}
+        >
+          <Ionicons name="calendar-outline" size={20} color="#ffffff" />
+          <Text style={styles.datePickerText}>{date.toDateString()}</Text>
+        </TouchableOpacity>
+
+        {show && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={onChange}
+          />
+        )}
 
         <TouchableOpacity
           style={styles.bookButton}
           onPress={() => {
-            // Your booking logic goes here
+            navigation.navigate("Confirm-Booking", {
+              restaurant, 
+              selectedSlot, 
+              date, 
+            });
           }}
         >
           <Text style={styles.bookButtonText}>Book Now</Text>
@@ -53,27 +100,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
   },
   backButton: {
-    position: 'absolute',
+    position: "absolute",
     top: 30,
     left: 15,
-    backgroundColor: '#007BFF',
+    backgroundColor: "#007BFF",
     padding: 12,
     borderRadius: 50,
-    zIndex: 10, // Ensure it's above other elements
-    shadowColor: '#000',
+    zIndex: 10,
+    shadowColor: "#000",
     shadowOpacity: 0.15,
     shadowRadius: 6,
     shadowOffset: { width: 0, height: 4 },
   },
   image: {
-    width: '100%',
-    height: 250,
+    width: "100%",
+    height: 140,
     borderRadius: 15,
-    marginTop: 40, // To make space for the back button
-    shadowColor: '#000',
+    marginTop: 40,
+    shadowColor: "#000",
     shadowOpacity: 0.2,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 4 },
@@ -85,45 +132,65 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 28,
-    fontWeight: '700',
-    color: '#34495e',
+    fontWeight: "700",
+    color: "#34495e",
     marginBottom: 8,
   },
   infoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 8,
   },
   location: {
     fontSize: 18,
-    color: '#7f8c8d',
+    color: "#7f8c8d",
     marginLeft: 10,
   },
   cuisine: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#2c3e50',
+    fontWeight: "600",
+    color: "#2c3e50",
     marginLeft: 10,
   },
   slots: {
     fontSize: 16,
-    color: '#2c3e50',
+    color: "#2c3e50",
     marginLeft: 10,
   },
-  bookButton: {
-    backgroundColor: '#007BFF',
+  picker: {
+    height: 50,
+    width: "100%",
+    marginBottom: 10,
+  },
+  datePickerButton: {
+    flexDirection: "row",
+    backgroundColor: "rgb(146, 204, 255)",
     paddingVertical: 12,
     borderRadius: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  datePickerText: {
+    color: "#ffffff",
+    fontSize: 18,
+    fontWeight: "600",
+    marginLeft: 8,
+  },
+  bookButton: {
+    backgroundColor: "#007BFF",
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOpacity: 0.2,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 4 },
   },
   bookButtonText: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });
 
