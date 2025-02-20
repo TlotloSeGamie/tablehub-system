@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const ConfirmBooking = ({ route, navigation }) => {
@@ -13,6 +13,9 @@ const ConfirmBooking = ({ route, navigation }) => {
       >
         <Ionicons name="arrow-back" size={24} color="#ffffff" />
       </TouchableOpacity>
+
+      {/* Display the restaurant image */}
+      <Image source={restaurant.image} style={styles.image} />
 
       <View style={styles.detailsContainer}>
         <Text style={styles.header}>Confirm Your Booking</Text>
@@ -45,8 +48,7 @@ const ConfirmBooking = ({ route, navigation }) => {
         <TouchableOpacity
           style={styles.confirmButton}
           onPress={() => {
-            // Handle booking confirmation logic here
-            navigation.navigate('BookingSuccess');  // Replace with your success screen
+            navigation.navigate('BookingSuccess'); 
           }}
         >
           <Text style={styles.confirmButtonText}>Confirm Booking</Text>
@@ -75,8 +77,18 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowOffset: { width: 0, height: 4 },
   },
+  image: {
+    width: "100%",
+    height: 140,
+    borderRadius: 15,
+    marginTop: 40,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+  },
   detailsContainer: {
-    marginTop: 80,
+    marginTop: 20,
     paddingHorizontal: 15,
     paddingBottom: 20,
   },

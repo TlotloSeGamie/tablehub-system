@@ -31,7 +31,8 @@ const HomeScreen = ({ navigation }) => {
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.location}>{item.location}</Text>
                 <Text style={styles.cuisine}>{item.cuisine}</Text>
-                <Pressable
+                <Text style={styles.slots}>Available Slots: {item.slots}</Text>
+                {/* <Pressable
                   style={({ pressed }) => [
                     styles.button,
                     { opacity: pressed ? 0.8 : 1 },
@@ -39,7 +40,7 @@ const HomeScreen = ({ navigation }) => {
                   onPress={() => navigation.navigate('Booking', { restaurant: item })}
                 >
                   <Text style={styles.buttonText}>Book Now</Text>
-                </Pressable>
+                </Pressable> */}
               </View>
             </Pressable>
           )}
@@ -102,6 +103,12 @@ const HomeScreen = ({ navigation }) => {
       fontWeight: '600',
       color: '#2c3e50',
       marginBottom: 10,
+    },
+    slots: {
+      fontSize: 13,
+      fontWeight: 'normal',
+      color: '#7f8c8d',
+      marginBottom: 6,
     },
     button: {
       backgroundColor: '#rgb(146, 204, 255)',
